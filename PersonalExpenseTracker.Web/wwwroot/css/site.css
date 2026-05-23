@@ -19,4 +19,158 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: #f5f7fb;
 }
+
+.dashboard-title {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.summary-card {
+    border: none;
+    border-radius: 18px;
+    color: white;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+    .summary-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+.summary-icon {
+    font-size: 45px;
+    opacity: 0.25;
+}
+
+.bg-gradient-green {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+
+.bg-gradient-blue {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.custom-table {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table thead {
+    background-color: #0f172a;
+    color: white;
+}
+
+.section-title {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.badge-category {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.amount-text {
+    font-weight: 700;
+    color: #16a34a;
+}
+
+.empty-data {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+
+@@media(max-width:768px) {
+    .dashboard-title {
+        font-size: 24px;
+    }
+
+    .summary-card h2 {
+        font-size: 24px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+}
+
+.page-title {
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.custom-card {
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    background: white;
+}
+
+.table thead {
+    background: #0f172a;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fafc;
+    transition: 0.2s;
+}
+
+.category-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-custom {
+    border-radius: 10px;
+    padding: 7px 14px;
+    font-weight: 600;
+}
+
+.description-text {
+    color: #475569;
+}
+
+.empty-data {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+    font-size: 15px;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@@media(max-width:768px) {
+
+    .table {
+        font-size: 14px;
+    }
+
+    .btn-custom {
+        margin-bottom: 5px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+    

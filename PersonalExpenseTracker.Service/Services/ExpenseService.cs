@@ -64,6 +64,25 @@ namespace PersonalExpenseTracker.Service.Services
             return ServiceResult.Ok("Deleted");
         }
 
+        public async Task<ExpenseDto?> DetailsAsync(int id)
+        {
+            var entity = await _repo.GetByIdAsync(id);
+
+            if (entity == null)
+                return null;
+
+            return new ExpenseDto
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Amount = entity.Amount,
+                Date = entity.Date,
+                Notes = entity.Notes,
+                CategoryName = entity.Category.Name,
+                HasReceipt = entity.ReceiptFileName != null
+            };
+        }
+
         public Task<ExpenseDto?> GetByIdAsync(int id)
         {
             throw new NotImplementedException();

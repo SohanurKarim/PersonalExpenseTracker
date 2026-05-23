@@ -1,6 +1,98 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <!-- Card -->
+            <div class="card shadow border-0 rounded-4">
+
+                <!-- Header -->
+                <div class="card-header bg-dark text-white py-3 rounded-top-4">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="fa-solid fa-shield-halved me-2"></i>
+                        Privacy Policy
+                    </h3>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body p-4">
+
+                    <p class="text-muted">
+                        This Privacy Policy explains how your personal expense data is collected, used, and protected in the
+                        <strong>Personal Expense Tracker</strong> application.
+                    </p>
+
+                    <hr />
+
+                    <h5 class="fw-bold text-primary">
+                        <i class="fa-solid fa-lock me-1"></i>
+                        Data Protection
+                    </h5>
+
+                    <p class="text-secondary">
+                        Your data is securely stored and is only accessible by you. We do not share your personal financial information
+                        with third parties.
+                    </p>
+
+                    <h5 class="fw-bold text-success mt-4">
+                        <i class="fa-solid fa-database me-1"></i>
+                        Data Storage
+                    </h5>
+
+                    <p class="text-secondary">
+                        All expense records are stored in a secure database. We use standard security practices to protect your data
+                        from unauthorized access.
+                    </p>
+
+                    <h5 class="fw-bold text-warning mt-4">
+                        <i class="fa-solid fa-cookie-bite me-1"></i>
+                        Cookies
+                    </h5>
+
+                    <p class="text-secondary">
+                        This application may use cookies to improve user experience and maintain session information.
+                    </p>
+
+                    <h5 class="fw-bold text-danger mt-4">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                        Important Notice
+                    </h5>
+
+                    <p class="text-secondary">
+                        This system is for personal or educational use. Always ensure your own backup of important financial data.
+                    </p>
+
+                    <hr />
+
+                    <div class="text-center text-muted small">
+                        <i class="fa-regular fa-calendar me-1"></i>
+                        Last updated: @DateTime.Now.ToString("dd MMM yyyy")
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer text-end bg-white border-0 rounded-bottom-4">
+
+                    <a asp-controller="Home" asp-action="Index"
+                       class="btn btn-outline-primary rounded-3 px-4">
+
+                        <i class="fa-solid fa-arrow-left me-1"></i>
+                        Back to Home
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

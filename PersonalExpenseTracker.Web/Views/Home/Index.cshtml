@@ -1,8 +1,154 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container py-4">
+
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-primary">
+            <i class="fa-solid fa-wallet me-2"></i>
+            Personal Expense Tracker
+        </h1>
+        <p class="text-muted">
+            Manage your income and expenses efficiently
+        </p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-money-bill-wave text-success fs-1 mb-2"></i>
+                    <h5 class="fw-bold">Total Expenses</h5>
+                    <h3 class="text-success">৳ @ViewBag.TotalExpense</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-layer-group text-primary fs-1 mb-2"></i>
+                    <h5 class="fw-bold">Categories</h5>
+                    <h3 class="text-primary">@ViewBag.TotalCategory</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body text-center">
+                    <i class="fa-solid fa-receipt text-warning fs-1 mb-2"></i>
+                    <h5 class="fw-bold">Total Records</h5>
+                    <h3 class="text-warning">@ViewBag.TotalExpenseCount</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                <i class="fa-solid fa-bolt text-warning me-1"></i>
+                Quick Actions
+            </h5>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                <a asp-controller="Expense" asp-action="Create"
+                   class="btn btn-success rounded-3 px-4">
+
+                    <i class="fa-solid fa-plus me-1"></i>
+                    Add Expense
+                </a>
+
+                <a asp-controller="Expense" asp-action="Index"
+                   class="btn btn-primary rounded-3 px-4">
+
+                    <i class="fa-solid fa-list me-1"></i>
+                    View Expenses
+                </a>
+
+                <a asp-controller="ExpenseCategory" asp-action="Index"
+                   class="btn btn-info text-white rounded-3 px-4">
+
+                    <i class="fa-solid fa-layer-group me-1"></i>
+                    Categories
+                </a>
+
+                <a asp-controller="Summary" asp-action="Index"
+                   class="btn btn-warning rounded-3 px-4">
+
+                    <i class="fa-solid fa-chart-pie me-1"></i>
+                    Summary
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">
+                <i class="fa-solid fa-clock-rotate-left text-secondary me-1"></i>
+                Recent Expenses
+            </h5>
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (ViewBag.RecentExpenses != null)
+                    {
+                        foreach (var item in ViewBag.RecentExpenses)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                <td class="text-success fw-bold">৳ @item.Amount</td>
+                                <td>@item.Date.ToShortDateString()</td>
+                                <td>
+                                    <span class="badge bg-info text-dark">
+                                        @item.CategoryName
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-3">
+                                No recent expenses
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
 </div>

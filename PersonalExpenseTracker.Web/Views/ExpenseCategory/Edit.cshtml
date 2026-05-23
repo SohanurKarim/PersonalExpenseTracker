@@ -1,0 +1,97 @@
+﻿@model PersonalExpenseTracker.Web.ViewModels.Category.CategoryEditVM
+
+@{
+    ViewData["Title"] = "Edit Category";
+}
+
+<div class="container py-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6 col-md-8">
+
+            <div class="card shadow border-0 rounded-4">
+
+                <div class="card-header bg-warning text-dark py-3 rounded-top-4">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="fa-solid fa-pen-to-square me-2"></i>
+                        Edit Category
+                    </h3>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Edit" method="post">
+
+                        <!-- Encrypted / Hidden Id -->
+                        <input type="hidden" asp-for="Id" />
+
+                        <!-- Category Name -->
+                        <div class="mb-3">
+
+                            <label asp-for="Name" class="form-label fw-semibold">
+                                <i class="fa-solid fa-folder-open text-primary me-1"></i>
+                                Category Name
+                            </label>
+
+                            <input asp-for="Name"
+                                   class="form-control form-control-lg rounded-3"
+                                   placeholder="Enter category name" />
+
+                            <span asp-validation-for="Name"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+
+                            <label asp-for="Description" class="form-label fw-semibold">
+                                <i class="fa-solid fa-align-left text-success me-1"></i>
+                                Description
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      rows="4"
+                                      class="form-control rounded-3"
+                                      placeholder="Write category description"></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between flex-wrap gap-2">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary px-4 rounded-3">
+
+                                <i class="fa-solid fa-arrow-left me-1"></i>
+                                Back
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-warning text-dark fw-semibold px-4 rounded-3">
+
+                                <i class="fa-solid fa-floppy-disk me-1"></i>
+                                Update Category
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

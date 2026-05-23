@@ -1,0 +1,221 @@
+﻿@model PersonalExpenseTracker.Service.DTOs.SummaryDto
+
+@{
+    ViewData["Title"] = "Summary Dashboard";
+}
+
+
+<div class="container-fluid py-4">
+
+    <!-- Dashboard Title -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+        <h2 class="dashboard-title">
+            <i class="fa-solid fa-chart-line me-2 text-primary"></i>
+            Expense Summary Dashboard
+        </h2>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-4">
+
+        <!-- Current Month Total -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card summary-card bg-gradient-green shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-light mb-2">
+                                Current Month Total
+                            </h6>
+
+                            <h2 class="fw-bold">
+                                ৳ @Model.CurrentMonthTotal
+                            </h2>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-wallet summary-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Categories -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card summary-card bg-gradient-blue shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-light mb-2">
+                                Total Categories
+                            </h6>
+
+                            <h2 class="fw-bold">
+                                @Model.CategoryTotals.Count()
+                            </h2>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-layer-group summary-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Expenses -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card summary-card bg-dark shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-light mb-2">
+                                Recent Expenses
+                            </h6>
+
+                            <h2 class="fw-bold">
+                                @Model.RecentExpenses.Count()
+                            </h2>
+                        </div>
+
+                        <div>
+                            <i class="fa-solid fa-receipt summary-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Category Wise Total -->
+    <div class="card custom-table mb-4 border-0">
+        <div class="card-header bg-white border-0 pt-4">
+            <h4 class="section-title">
+                <i class="fa-solid fa-chart-pie text-primary me-2"></i>
+                Category Wise Total
+            </h4>
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th>
+                            <i class="fa-solid fa-folder-open me-1"></i>
+                            Category
+                        </th>
+
+                        <th>
+                            <i class="fa-solid fa-money-bill-wave me-1"></i>
+                            Total Amount
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (Model.CategoryTotals.Any())
+                    {
+                        @foreach (var item in Model.CategoryTotals)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="badge-category">
+                                        @item.CategoryName
+                                    </span>
+                                </td>
+
+                                <td class="amount-text">
+                                    ৳ @item.TotalAmount
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" class="empty-data">
+                                No category data found.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+    <!-- Recent Expenses -->
+    <div class="card custom-table border-0">
+        <div class="card-header bg-white border-0 pt-4">
+            <h4 class="section-title">
+                <i class="fa-solid fa-clock-rotate-left text-success me-2"></i>
+                Recent Expenses
+            </h4>
+        </div>
+
+        <div class="card-body table-responsive">
+
+            <table class="table table-striped align-middle mb-0">
+
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (Model.RecentExpenses.Any())
+                    {
+                        @foreach (var item in Model.RecentExpenses)
+                        {
+                            <tr>
+                                <td>
+                                    <i class="fa-solid fa-file-invoice-dollar text-primary me-2"></i>
+                                    @item.Title
+                                </td>
+
+                                <td class="amount-text">
+                                    ৳ @item.Amount
+                                </td>
+
+                                <td>
+                                    <i class="fa-regular fa-calendar me-1 text-secondary"></i>
+                                    @item.Date.ToShortDateString()
+                                </td>
+
+                                <td>
+                                    <span class="badge-category">
+                                        @item.CategoryName
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="empty-data">
+                                No recent expenses found.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>

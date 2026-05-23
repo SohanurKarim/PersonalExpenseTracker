@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonalExpenseTracker.Service.DTOs.ExpenseDto>
+﻿@* @model IEnumerable<PersonalExpenseTracker.Service.DTOs.ExpenseDto>
 
 <h2>Expenses</h2>
 
@@ -40,6 +40,14 @@
                     }
                 </td>
                 <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"
+                       class="btn btn-primary btn-sm">
+                        Edit
+                    </a>    
+                    <a asp-action="Details" asp-route-id="@item.Id"
+                                class="btn btn-primary btn-sm">
+                        Details
+                    </a>
                     <a asp-action="Delete" asp-route-id="@item.Id"
                        class="btn btn-danger btn-sm">
                         Delete
@@ -48,4 +56,107 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
+<!-- FILTER -->
+@model IEnumerable<PersonalExpenseTracker.Service.DTOs.ExpenseDto>
+@{
+    var categories = ViewBag.Categories as List<SelectListItem> ?? new List<SelectListItem>();
+}
+<div class="card shadow-sm border-0 rounded-4 mb-3">
+    <div class="card-body">
+
+        <div class="row g-2">
+
+            <div class="col-md-4">
+                <input type="text" id="searchBox"
+                       class="form-control"
+                       placeholder="Search title..." />
+            </div>
+
+            <div class="col-md-3">
+                <select id="categoryId" class="form-select">
+                    <option value="">All Categories</option>
+
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat.Value">@cat.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <input type="date" id="fromDate" class="form-control" />
+            </div>
+
+            <div class="col-md-2">
+                <input type="date" id="toDate" class="form-control" />
+            </div>
+
+            <div class="col-md-1 d-grid">
+                <button id="resetBtn" class="btn btn-secondary">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- AJAX TABLE LOAD -->
+<div class="card shadow-sm border-0 rounded-4">
+    <div class="card-body table-responsive" id="expenseTable">
+
+        @await Html.PartialAsync("_ExpenseTable", Model)
+
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let timer;
+
+    function loadExpenses() {
+
+        var search = $("#searchBox").val();
+        var categoryId = $("#categoryId").val();
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+
+        $.ajax({
+            url: '/Expense/Filter',
+            type: 'GET',
+            data: {
+                search: search,
+                categoryId: categoryId,
+                fromDate: fromDate,
+                toDate: toDate
+            },
+            success: function (result) {
+                $("#expenseTable").html(result);
+            }
+        });
+    }
+
+    //  Debounced search (prevents spam requests)
+    $("#searchBox").on("keyup", function () {
+        clearTimeout(timer);
+        timer = setTimeout(loadExpenses, 400);
+    });
+
+    $("#categoryId, #fromDate, #toDate").on("change", function () {
+        loadExpenses();
+    });
+
+    // RESET
+    $("#resetBtn").on("click", function () {
+
+        $("#searchBox").val("");
+        $("#categoryId").val("");
+        $("#fromDate").val("");
+        $("#toDate").val("");
+
+        loadExpenses();
+    });
+
+</script>

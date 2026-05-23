@@ -1,0 +1,117 @@
+﻿@model PersonalExpenseTracker.Service.DTOs.CategoryDto
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6 col-md-8">
+
+            <div class="card shadow border-0 rounded-4">
+
+                <!-- Header -->
+                <div class="card-header bg-danger text-white py-3 rounded-top-4">
+                    <h3 class="mb-0 fw-bold">
+                        <i class="fa-solid fa-trash-can me-2"></i>
+                        Delete Category
+                    </h3>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body p-4 text-center">
+
+                    <!-- Warning Icon -->
+                    <div class="mb-4">
+                        <i class="fa-solid fa-triangle-exclamation text-danger"
+                           style="font-size:70px;"></i>
+                    </div>
+
+                    <!-- Message -->
+                    <h4 class="fw-bold text-dark mb-3">
+                        Are you sure?
+                    </h4>
+
+                    <p class="text-muted fs-5">
+                        You are about to delete this category:
+                    </p>
+
+                    <div class="alert alert-light border rounded-3 shadow-sm">
+                        <h5 class="mb-1 text-danger fw-bold">
+                            <i class="fa-solid fa-folder-open me-2"></i>
+                            @Model.Name
+                        </h5>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Description))
+                        {
+                            <p class="text-muted mb-0">
+                                @Model.Description
+                            </p>
+                        }
+                    </div>
+
+                    <!-- Form -->
+                    <form asp-action="Delete"
+                          method="post"
+                          id="deleteForm">
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary px-4 rounded-3">
+
+                                <i class="fa-solid fa-arrow-left me-1"></i>
+                                Cancel
+                            </a>
+
+                            <button type="button"
+                                    class="btn btn-danger px-4 rounded-3 fw-semibold"
+                                    onclick="confirmDelete()">
+
+                                <i class="fa-solid fa-trash me-1"></i>
+                                Yes, Delete
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+    function confirmDelete() {
+
+        Swal.fire({
+            title: 'Delete Category?',
+            text: "This action cannot be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+
+                document.getElementById('deleteForm').submit();
+            }
+        });
+    }
+</script>

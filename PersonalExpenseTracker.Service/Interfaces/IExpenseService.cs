@@ -14,5 +14,6 @@ namespace PersonalExpenseTracker.Service.Interfaces
         Task<ServiceResult> CreateAsync(ExpenseCreateDto dto);
         Task<ServiceResult> UpdateAsync(ExpenseEditDto dto);
         Task<ServiceResult> DeleteAsync(int id);
+        Task<ExpenseDto?> DetailsAsync(int id);
     }
 }
