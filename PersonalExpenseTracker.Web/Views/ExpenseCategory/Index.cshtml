@@ -3,10 +3,17 @@
 @{
     ViewData["Title"] = "Categories";
 }
-
-
-
-
+@if (TempData["Success"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '@TempData["Success"]',
+            confirmButtonColor: '#198754'
+        });
+    </script>
+}
 
 <div class="container-fluid py-4">
 

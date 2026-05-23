@@ -83,14 +83,44 @@ namespace PersonalExpenseTracker.Service.Services
             };
         }
 
-        public Task<ExpenseDto?> GetByIdAsync(int id)
+        public async Task<ExpenseEditDto?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _repo.GetByIdAsync(id);
+
+            if (entity == null)
+                return null;
+
+            return new ExpenseEditDto
+            {
+                Id = entity.Id,
+                Title = entity.Title,
+                Amount = entity.Amount,
+                Date = entity.Date,
+                CategoryId = entity.CategoryId,
+                Notes = entity.Notes,
+                ReceiptFileName = entity.ReceiptFileName
+            };
         }
 
-        public Task<ServiceResult> UpdateAsync(ExpenseEditDto dto)
+        public async Task<ServiceResult> UpdateAsync(ExpenseEditDto dto)
         {
-            throw new NotImplementedException();
+            var entity = await _repo.GetByIdAsync(dto.Id);
+
+            if (entity == null)
+                return ServiceResult.Fail("Not found");
+
+            entity.Title = dto.Title;
+            entity.Amount = dto.Amount;
+            entity.Date = dto.Date;
+            entity.CategoryId = dto.CategoryId;
+            entity.Notes = dto.Notes;
+
+            if (!string.IsNullOrEmpty(dto.ReceiptFileName))
+                entity.ReceiptFileName = dto.ReceiptFileName;
+
+            await _repo.UpdateAsync(entity);
+
+            return ServiceResult.Ok("Updated successfully");
         }
     }
 }

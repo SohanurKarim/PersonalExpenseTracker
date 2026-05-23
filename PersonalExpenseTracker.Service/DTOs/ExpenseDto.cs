@@ -13,6 +13,7 @@ namespace PersonalExpenseTracker.Service.DTOs
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
         public string? Notes { get; set; }
+        //public int CategoryId { get; set; }
         public string CategoryName { get; set; } = string.Empty;
         public bool HasReceipt { get; set; }
     }

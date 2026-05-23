@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PersonalExpenseTracker.Service.DTOs;
 using PersonalExpenseTracker.Service.Interfaces;
 using PersonalExpenseTracker.Web.ViewModels.Expense;
@@ -24,6 +25,15 @@ namespace PersonalExpenseTracker.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var data = await _expenseService.GetAllAsync();
+
+            var categories = await _categoryService.GetAllAsync();
+
+            ViewBag.Categories = categories.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            }).ToList();
+
             return View(data);
         }
 
@@ -86,32 +96,49 @@ namespace PersonalExpenseTracker.Web.Controllers
         }
 
         //Here coding for edit
-         public async Task<IActionResult> Edit(int id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
             var data = await _expenseService.GetByIdAsync(id);
+
             if (data == null)
             {
                 TempData["Error"] = "Expense not found";
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Categories = await _categoryService.GetAllAsync();
+
+            ViewBag.Categories = (await _categoryService.GetAllAsync())
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name
+                }).ToList();
+
             var model = new ExpenseEditVM
             {
                 Id = data.Id,
                 Title = data.Title,
                 Amount = data.Amount,
                 Date = data.Date,
-                //CategoryId = data.CategoryId,
+                CategoryId = data.CategoryId,   
                 Notes = data.Notes
             };
+
             return View(model);
         }
-         [HttpPost]
+
+        [HttpPost]
         public async Task<IActionResult> Edit(ExpenseEditVM model)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = await _categoryService.GetAllAsync();
+                ViewBag.Categories = (await _categoryService.GetAllAsync())
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Id.ToString(),
+                        Text = x.Name
+                    }).ToList();
+
                 return View(model);
             }
 
@@ -123,7 +150,7 @@ namespace PersonalExpenseTracker.Web.Controllers
                 Date = model.Date,
                 CategoryId = model.CategoryId,
                 Notes = model.Notes,
-                ReceiptFileName = model.ReceiptFile?.FileName // (simple version)
+                ReceiptFileName = model.ReceiptFile?.FileName
             };
 
             var result = await _expenseService.UpdateAsync(dto);
@@ -133,16 +160,24 @@ namespace PersonalExpenseTracker.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
         //Here ajax coding search
-        public async Task<IActionResult> Filter(string search, int? categoryId, DateTime? fromDate, DateTime? toDate)
+        public async Task<IActionResult> Filter(string search, string categoryName, DateTime? fromDate, DateTime? toDate)
         {
             var expenses = await _expenseService.GetAllAsync();
 
+            // Search by title
             if (!string.IsNullOrEmpty(search))
                 expenses = expenses.Where(x => x.Title.Contains(search)).ToList();
 
-            //if (categoryId.HasValue)
-            //    expenses = expenses.Where(x => x.CategoryId == categoryId).ToList();
+            // Filter by CATEGORY NAME
+            if (!string.IsNullOrEmpty(categoryName))
+            {
+                expenses = expenses
+                    .Where(x => x.CategoryName != null &&
+                                x.CategoryName.Trim().ToLower() == categoryName.Trim().ToLower())
+                    .ToList();
+            }
 
+            // Date filters
             if (fromDate.HasValue)
                 expenses = expenses.Where(x => x.Date >= fromDate).ToList();
 

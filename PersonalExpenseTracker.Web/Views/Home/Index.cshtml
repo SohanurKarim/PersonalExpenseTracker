@@ -2,153 +2,164 @@
     ViewData["Title"] = "Home";
 }
 
+<!-- HERO -->
+<div class="hero-banner text-white d-flex align-items-center">
 
-<div class="container py-4">
+    <div class="container text-center">
 
-    <!-- Header -->
-    <div class="text-center mb-4">
-        <h1 class="fw-bold text-primary">
+        <h1 class="fw-bold display-5 mb-3">
             <i class="fa-solid fa-wallet me-2"></i>
             Personal Expense Tracker
         </h1>
-        <p class="text-muted">
-            Manage your income and expenses efficiently
+
+        <p class="lead opacity-75 mb-4">
+            Track expenses, manage categories and improve your financial habits
         </p>
-    </div>
 
-    <!-- Summary Cards -->
-    <div class="row g-3 mb-4">
+        <a asp-controller="Expense" asp-action="Create"
+           class="btn btn-success btn-lg rounded-3 px-4 me-2">
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body text-center">
-                    <i class="fa-solid fa-money-bill-wave text-success fs-1 mb-2"></i>
-                    <h5 class="fw-bold">Total Expenses</h5>
-                    <h3 class="text-success">৳ @ViewBag.TotalExpense</h3>
-                </div>
-            </div>
-        </div>
+            <i class="fa-solid fa-plus me-1"></i>
+            Add Expense
+        </a>
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body text-center">
-                    <i class="fa-solid fa-layer-group text-primary fs-1 mb-2"></i>
-                    <h5 class="fw-bold">Categories</h5>
-                    <h3 class="text-primary">@ViewBag.TotalCategory</h3>
-                </div>
-            </div>
-        </div>
+        <a asp-controller="Expense" asp-action="Index"
+           class="btn btn-outline-light btn-lg rounded-3 px-4">
 
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body text-center">
-                    <i class="fa-solid fa-receipt text-warning fs-1 mb-2"></i>
-                    <h5 class="fw-bold">Total Records</h5>
-                    <h3 class="text-warning">@ViewBag.TotalExpenseCount</h3>
-                </div>
-            </div>
-        </div>
+            View Expenses
+        </a>
 
     </div>
 
-    <!-- Quick Actions -->
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-body">
+</div>
 
-            <h5 class="fw-bold mb-3">
-                <i class="fa-solid fa-bolt text-warning me-1"></i>
-                Quick Actions
-            </h5>
+<!-- INTRO SECTION -->
+<div class="container py-5">
 
-            <div class="d-flex flex-wrap gap-2">
+    <div class="row align-items-center g-5">
 
-                <a asp-controller="Expense" asp-action="Create"
-                   class="btn btn-success rounded-3 px-4">
+        <div class="col-lg-6">
 
-                    <i class="fa-solid fa-plus me-1"></i>
-                    Add Expense
-                </a>
+            <h2 class="fw-bold mb-3">
+                Take Control of Your Money
+            </h2>
 
-                <a asp-controller="Expense" asp-action="Index"
-                   class="btn btn-primary rounded-3 px-4">
+            <p class="text-muted">
+                A simple and modern way to track your daily expenses and understand your spending habits.
+            </p>
 
-                    <i class="fa-solid fa-list me-1"></i>
-                    View Expenses
-                </a>
+            <ul class="list-unstyled mt-4">
 
-                <a asp-controller="ExpenseCategory" asp-action="Index"
-                   class="btn btn-info text-white rounded-3 px-4">
+                <li class="mb-2">
+                    <i class="fa-solid fa-circle-check text-success me-2"></i>
+                    Easy expense tracking
+                </li>
 
-                    <i class="fa-solid fa-layer-group me-1"></i>
-                    Categories
-                </a>
+                <li class="mb-2">
+                    <i class="fa-solid fa-circle-check text-success me-2"></i>
+                    Smart category management
+                </li>
 
-                <a asp-controller="Summary" asp-action="Index"
-                   class="btn btn-warning rounded-3 px-4">
+                <li class="mb-2">
+                    <i class="fa-solid fa-circle-check text-success me-2"></i>
+                    Clear financial insights
+                </li>
 
-                    <i class="fa-solid fa-chart-pie me-1"></i>
-                    Summary
-                </a>
+            </ul>
 
-            </div>
+            <a asp-controller="Expense" asp-action="Index"
+               class="btn btn-primary mt-3 px-4 rounded-3">
+                Start Now
+            </a>
 
         </div>
-    </div>
 
-    <!-- Recent Activity -->
-    <div class="card border-0 shadow-sm rounded-4">
+        <div class="col-lg-6">
 
-        <div class="card-body">
+            <div class="rounded-4 overflow-hidden shadow-sm">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+                     class="img-fluid rounded-4 shadow-sm" />
 
-            <h5 class="fw-bold mb-3">
-                <i class="fa-solid fa-clock-rotate-left text-secondary me-1"></i>
-                Recent Expenses
-            </h5>
-
-            <table class="table table-hover align-middle">
-
-                <thead class="table-dark">
-                    <tr>
-                        <th>Title</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Category</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @if (ViewBag.RecentExpenses != null)
-                    {
-                        foreach (var item in ViewBag.RecentExpenses)
-                        {
-                            <tr>
-                                <td>@item.Title</td>
-                                <td class="text-success fw-bold">৳ @item.Amount</td>
-                                <td>@item.Date.ToShortDateString()</td>
-                                <td>
-                                    <span class="badge bg-info text-dark">
-                                        @item.CategoryName
-                                    </span>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="4" class="text-center text-muted py-3">
-                                No recent expenses
-                            </td>
-                        </tr>
-                    }
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+<!-- TESTIMONIALS -->
+<div class="container pb-5">
+
+    <div class="text-center mb-4">
+
+        <h3 class="fw-bold">What Users Say</h3>
+        <p class="text-muted">Simple and effective expense tracking</p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted">
+                    “Helps me track my daily spending very easily.”
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                    <i class="fa-solid fa-user-circle fs-2 text-primary me-2"></i>
+                    <div>
+                        <strong>Rahim</strong><br />
+                        <small class="text-muted">Student</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted">
+                    “Clean UI and very smooth experience.”
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                    <i class="fa-solid fa-user-circle fs-2 text-success me-2"></i>
+                    <div>
+                        <strong>Ayesha</strong><br />
+                        <small class="text-muted">Developer</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <p class="text-muted">
+                    “Now I understand my monthly expenses clearly.”
+                </p>
+                <div class="d-flex align-items-center mt-3">
+                    <i class="fa-solid fa-user-circle fs-2 text-warning me-2"></i>
+                    <div>
+                        <strong>Karim</strong><br />
+                        <small class="text-muted">Business Owner</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- STYLE -->
+<style>
+    .hero-banner {
+        height: 420px;
+        background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        transition: 0.3s ease;
+    }
+</style>
